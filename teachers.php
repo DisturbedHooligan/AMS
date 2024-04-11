@@ -116,9 +116,9 @@ $result = mysqli_query($data, $sql);
 
         }
         .student-header a h1:hover{
-            color: #fff; /* Set the link color on hover */
-        background-color: #007bff; /* Set background color on hover */
-        transition: color 0.3s ease, background-color 0.3s ease; /* Add a smooth transition effect */
+            color: #fff; 
+        background-color: #007bff; 
+        transition: color 0.3s ease, background-color 0.3s ease; 
    
 
         }
@@ -127,9 +127,9 @@ $result = mysqli_query($data, $sql);
 
         }
         .student-header a{
-            color: #fff; /* Set the link color on hover */
-        background-color: #007bff; /* Set background color on hover */
-        transition: color 0.3s ease, background-color 0.3s ease; /* Add a smooth transition effect */
+            color: #fff; 
+        background-color: #007bff; 
+        transition: color 0.3s ease, background-color 0.3s ease; 
    
         }
     </style>
