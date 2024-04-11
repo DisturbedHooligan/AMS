@@ -1,0 +1,226 @@
+<?php
+@include 'config.php';
+
+session_start();
+
+if (!isset($_SESSION['admin_name'])) {
+    header('location:index.php');
+    exit();
+}
+
+$query = "SELECT * FROM user_form WHERE status = 'approved'";
+$result = mysqli_query($conn, $query);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Approved Registrations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .header {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .header h1:hover {
+            color: #fff;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .header-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header-links a:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+        .Logout {
+            margin-left: auto;
+        }
+
+        .btn {
+            padding: 10px;
+            background-color: #dc3545; 
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #c82333; 
+        }
+
+        .main-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .go-back-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .go-back-btn:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+        .header a h1{
+            color: #000;
+            text-decoration:none; 
+
+        }
+        .header a h1:hover{
+            color: #fff;
+        background-color: #007bff;
+        transition: color 0.3s ease, background-color 0.3s ease; 
+   
+
+        }
+        .header a{
+            color: #000; 
+            text-decoration:none; 
+
+
+        }
+        .header a{
+            color: #fff;
+        background-color: #007bff; 
+        transition: color 0.3s ease, background-color 0.3s ease;
+   
+        }
+        .Logout a.btn {
+    background-color: #dc3545; 
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.Logout a.btn:hover {
+    background-color: #cc0000;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="content">
+    <div class="header">
+    <div style="display: flex; align-items: center; cursor: pointer;">
+        <a href="admin_profile.php">
+            <i class="fa fa-user" style="margin-right: 10px;"></i>
+        </a>
+        <a href="admin_page.php">
+            <h1>Welcome, <?php echo $_SESSION['admin_name']; ?>!</h1>
+        </a>
+    </div>
+    <div class="header-links">
+        <a href="view_student.php">View Students</a>
+        <a href="view_teacher.php">View Teachers</a>
+        <a href="view_pending_registrations.php">Pending Registrations</a>
+
+        <div class="Logout">
+                <a href="logout.php" class="btn btn-primary">Logout</a>
+            </div>
+            </div>
+</div>
+
+        <section class="main-content">
+            <h2>View Approved Registrations</h2>
+
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                echo '<ul>';
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<li>';
+                    echo '<p>Name: ' . $row['name'] . '<br>Email: ' . $row['email'] . '<br>User Type: ' . $row['user_type'] . '</p>';
+                    echo '</li>';
+                }
+                echo '</ul>';
+            } else {
+                echo '<p>No approved registrations.</p>';
+            }
+            ?>
+        </section>
+
+        <a href="view_pending_registrations.php" class="go-back-btn">Go Back</a>
+    </div>
+</body>
+
+</html>
