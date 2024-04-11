@@ -27,16 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newPassword = $_POST['new_password'];
         $confirmPassword = $_POST['confirm_password'];
 
-        // Check if passwords match
         if ($newPassword === $confirmPassword) {
-            // Check if user_id is set in the session
             if (isset($_SESSION['user_id'])) {
                 $userId = $_SESSION['user_id'];
 
-                // Hash the new password
                 $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-                // Update the database
                 $updateQuery = "UPDATE user_form SET name = '$newName', email = '$newEmail', password = '$hashedPassword' WHERE id = $userId AND user_type = 'student'";
                 mysqli_query($data, $updateQuery);
 
@@ -189,17 +185,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <span class="back-arrow" onclick="history.back()">&larr;</span>
         <section class="main-content">
             <?php if ($updateSuccess): ?>
-                <!-- Success Message -->
                 <div id="successMessage">
                     <p style="color: green;">Changes were made successfully.</p>
                     <p><a href="logout.php" style="color: white;">Logout</a></p>
                 </div>
             <?php else: ?>
-                <!-- Admin Profile Form -->
                 <h2>Student Profile</h2>
                 <div class="profile-form">
                     <form method="post" action="">
-                        <!-- Form Fields -->
                         <label for="new_name">New Name:</label>
                         <input type="text" id="new_name" name="new_name" value="<?php echo isset($_SESSION['name']) ? $_SESSION['name'] : ''; ?>" required>
 
@@ -215,7 +208,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" name="update_profile">Update Profile</button>
                     </form>
 
-                    <!-- Error Messages -->
                     <?php if (!empty($errors)): ?>
                         <div class="error-message">
                             <?php foreach ($errors as $error): ?>
